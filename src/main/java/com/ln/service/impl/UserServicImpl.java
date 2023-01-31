@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class UserServicImpl implements UserService {
 
@@ -46,5 +48,10 @@ public class UserServicImpl implements UserService {
     @Override
     public void updateUserById(UserView userView) {
         userMapper.updateUserById(userView);
+    }
+
+    @Override
+    public List<UserView> findAll_page(Map map) {
+        return userMapper.findAll_page(map);
     }
 }

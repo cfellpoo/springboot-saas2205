@@ -17,6 +17,12 @@
         from t_user
     </select>
 
+    <!--    查询全部_分页-->
+    <select id="findAll_page" resultType="UserView">
+        SELECT *
+        from t_user limit #{startPage},#{Pagesize}
+    </select>
+
     <!--根据id删除用户-->
     <delete id="delUserById">
         delete
@@ -33,10 +39,11 @@
     <!--根据id查询用户-->
     <select id="findUserById" resultType="UserView">
         select *
-        from t_user where id = #{id}
+        from t_user
+        where id = #{id}
     </select>
 
-<!--   根据id修改用户-->
+    <!--   根据id修改用户-->
     <update id="updateUserById" parameterType="userView">
         update t_user
         set username  = #{username},

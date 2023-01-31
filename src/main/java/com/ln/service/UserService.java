@@ -4,6 +4,7 @@ import com.ln.pojo.UserView;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
    UserView loginUser(UserView userView);
@@ -12,4 +13,5 @@ public interface UserService {
    void addUser(UserView userView);
    UserView findUserById(Integer id);
    void updateUserById(UserView userView);
+   List<UserView> findAll_page(Map map);
 }
