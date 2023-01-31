@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ln.mapper.UserMapper">
+    <!--    登录-->
+    <select id="loginUser" resultType="UserView">
+        SELECT *
+        from t_user
+        where t_user.username = #{username}
+          and userpswd = #{userpswd}
+    </select>
+
+    <!--    查询全部-->
+    <select id="findAll" resultType="UserView">
+        SELECT *
+        from t_user
+    </select>
+
+    <!--根据id删除用户-->
+    <delete id="delUserById">
+        delete
+        from t_user
+        where id = #{id}
+    </delete>
+    <!--新增用户-->
+    <insert id="addUser" parameterType="UserView">
+        insert into t_user
+        values (#{id}, #{username}, #{loginacct}, #{userpswd}, #{email}, #{createtime})
+    </insert>
+
+
+    <!--根据id查询用户-->
+    <select id="findUserById" resultType="UserView">
+        select *
+        from t_user where id = #{id}
+    </select>
+
+<!--   根据id修改用户-->
+    <update id="updateUserById" parameterType="userView">
+        update t_user
+        set username  = #{username},
+            loginacct = #{loginacct},
+            email     = #{email}
+        where id = #{id};
+    </update>
+
+
+</mapper>
