@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ln.mapper.UserMapper">
-    <!--    登录-->
+    <!--登录-->
     <select id="loginUser" resultType="UserView">
         SELECT *
         from t_user
@@ -11,17 +11,23 @@
           and userpswd = #{userpswd}
     </select>
 
-    <!--    查询全部-->
+
+    <!--查询全部-->
     <select id="findAll" resultType="UserView">
         SELECT *
         from t_user
     </select>
+    <!--查询全部-->
 
-    <!--    查询全部_分页-->
+
+    <!--查询全部_分页-->
     <select id="findAll_page" resultType="UserView">
         SELECT *
         from t_user limit #{startPage},#{Pagesize}
     </select>
+    <!--查询全部_分页-->
+
+
 
     <!--根据id删除用户-->
     <delete id="delUserById">
@@ -29,11 +35,17 @@
         from t_user
         where id = #{id}
     </delete>
+    <!--根据id删除用户-->
+
+
+
+
     <!--新增用户-->
     <insert id="addUser" parameterType="UserView">
         insert into t_user
         values (#{id}, #{username}, #{loginacct}, #{userpswd}, #{email}, #{createtime})
     </insert>
+    <!--新增用户-->
 
 
     <!--根据id查询用户-->
@@ -42,8 +54,10 @@
         from t_user
         where id = #{id}
     </select>
+    <!--根据id查询用户-->
 
-    <!--   根据id修改用户-->
+
+    <!--根据id修改用户-->
     <update id="updateUserById" parameterType="userView">
         update t_user
         set username  = #{username},
@@ -51,6 +65,14 @@
             email     = #{email}
         where id = #{id};
     </update>
+    <!--根据id修改用户-->
 
+
+    <!--用户总条数-->
+    <select id="UserCount" resultType="int">
+        select count(*) as countUser
+        from t_user
+    </select>
+    <!--用户总条数-->
 
 </mapper>

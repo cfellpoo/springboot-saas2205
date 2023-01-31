@@ -255,7 +255,7 @@
         window.location.href = "edit.html";
     });*/
     function changepageno(pageno) {
-        window.location.href = "/uc/findInfopage?pageno=" + pageno;
+        window.location.href = "/userController/toindex_page?startPage=" + pageno;
     }
 
     function nameTexts() {
