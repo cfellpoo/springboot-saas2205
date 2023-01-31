@@ -68,8 +68,6 @@ public class UserController {
 
         List<UserView> all = userService.findAll_page(map);
 
-        Math.ceil()
-
         model.addAttribute("list", all);
         return "index.jsp";
     }
