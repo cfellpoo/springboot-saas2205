@@ -162,6 +162,7 @@ public class UserController {
         try {
             System.out.println('t');
             //手动设置用户随机UUIDd
+            //手动设置用户随机UUIDd
             userView.setId(UUID.randomUUID().toString());
             //手动设置用户密码为123
             userView.setUserpswd("123");
