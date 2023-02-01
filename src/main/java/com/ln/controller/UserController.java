@@ -24,7 +24,7 @@ public class UserController {
      * 请求跟目录
      * @return  login
      */
-    @RequestMapping("/toLogin")
+    @RequestMapping("/")
     public String defaultPage() {
         return "login";
     }
@@ -93,7 +93,8 @@ public class UserController {
                                @RequestParam(defaultValue = "1", required = false)
                                        Integer startPage,
                                @RequestParam(defaultValue = "10", required = false)
-                                       Integer pageSize) {
+                                       Integer pageSize,
+                               @RequestParam(defaultValue = "",required = false) String likeName_respon) {
 
         //起始页= 开始页-1*每页的条数
         Integer startPage_req = (startPage - 1) * pageSize;
@@ -101,6 +102,8 @@ public class UserController {
         HashMap<Object, Object> map = new HashMap<>();
         map.put("startPage", startPage_req);
         map.put("Pagesize", pageSize);
+        map.put("likeName", "%"+likeName_respon+"%");
+
 
         //总页数 = 总条数%pageSize并向上取整
         double totalno2 = userService.UserCount() % pageSize / 10.0;
