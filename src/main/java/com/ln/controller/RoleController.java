@@ -52,6 +52,10 @@ public class RoleController {
                                        Integer pageSize,
                                @RequestParam(defaultValue = "",required = false) String likeName_respon) {
 
+        if (startPage == 0 ) {
+            startPage = 1;
+        }
+
         //起始页= 开始页-1*每页的条数
         Integer startPage_req = (startPage - 1) * pageSize;
 
