@@ -64,7 +64,7 @@
     <!--用户总条数-->
     <select id="UserCount" resultType="int">
         select count(*) as countUser
-        from t_user
+        from t_user where username like #{likeName}
     </select>
 
     <!-- 批量删 -->

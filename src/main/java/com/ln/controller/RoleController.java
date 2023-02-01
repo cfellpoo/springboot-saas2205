@@ -63,10 +63,8 @@ public class RoleController {
 
         //总页数 = 总条数%pageSize并向上取整
         double totalno2 = roleService.roleCount("%"+likeName_respon+"%") % pageSize / 10.0;
-        System.out.println(totalno2);
         double totalno = Math.ceil(roleService.roleCount("%"+likeName_respon+"%") / pageSize + totalno2);
         List<UserView> all = roleService.findAllRole_page(map);
-        System.out.println(totalno);
 
         model.addAttribute("list", all);
         model.addAttribute("totalno", totalno);

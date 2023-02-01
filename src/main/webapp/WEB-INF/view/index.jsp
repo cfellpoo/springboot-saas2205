@@ -145,7 +145,7 @@
                         <div class="form-group has-feedback">
                             <div class="input-group">
                                 <div class="input-group-addon">查询条件</div>
-                                <input id="nameText" class="form-control has-success" type="text" placeholder="请输入查询条件">
+                                <input id="nameText" value="${likeName}" class="form-control has-success" type="text" placeholder="请输入查询条件">
                             </div>
                         </div>
                         <button type="button" onclick="nameTexts()" class="btn btn-warning"><i
@@ -255,7 +255,8 @@
         window.location.href = "edit.html";
     });*/
     function changepageno(pageno) {
-        window.location.href = "/userController/toindex_page?startPage=" + pageno;
+        var username = $("#nameText").val();
+        window.location.href = "/userController/toindex_page?startPage=" + pageno+"&likeName_respon="+username;
     }
 
     function nameTexts() {
@@ -301,7 +302,7 @@
         ids = ids.substring(0, ids.length - 1)
         $.ajax({
             type: "post",
-            url: baseUrl + "/uc/deluserss",
+            url:"/userController/deluserss",
             data: {
                 ids: ids
             },

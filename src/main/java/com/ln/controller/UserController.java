@@ -22,7 +22,8 @@ public class UserController {
 
     /**
      * 请求跟目录
-     * @return  login
+     *
+     * @return login
      */
     @RequestMapping("/")
     public String defaultPage() {
@@ -31,6 +32,7 @@ public class UserController {
 
     /**
      * 跳转login页面
+     *
      * @return
      */
     @RequestMapping("/toLogin")
@@ -94,7 +96,7 @@ public class UserController {
                                        Integer startPage,
                                @RequestParam(defaultValue = "10", required = false)
                                        Integer pageSize,
-                               @RequestParam(defaultValue = "",required = false) String likeName_respon) {
+                               @RequestParam(defaultValue = "", required = false) String likeName_respon) {
 
         //起始页= 开始页-1*每页的条数
         Integer startPage_req = (startPage - 1) * pageSize;
@@ -102,18 +104,19 @@ public class UserController {
         HashMap<Object, Object> map = new HashMap<>();
         map.put("startPage", startPage_req);
         map.put("Pagesize", pageSize);
-        map.put("likeName", "%"+likeName_respon+"%");
+        map.put("likeName", "%" + likeName_respon + "%");
 
 
         //总页数 = 总条数%pageSize并向上取整
-        double totalno2 = userService.UserCount() % pageSize / 10.0;
-        double totalno = Math.ceil(userService.UserCount() / pageSize + totalno2);
+        double totalno2 = userService.UserCount("%" + likeName_respon + "%") % pageSize / 10.0;
+        double totalno = Math.ceil(userService.UserCount("%" + likeName_respon + "%") / pageSize + totalno2);
         List<UserView> all = userService.findAll_page(map);
 
         model.addAttribute("list", all);
         model.addAttribute("totalno", totalno);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("pageno", startPage);
+        model.addAttribute("likeName", likeName_respon);
         return "index";
     }
 
@@ -174,12 +177,13 @@ public class UserController {
 
     /**
      * 跳转修改页面
+     *
      * @param id    要修改的用户id
      * @param model 前端回显用户信息
      * @return edit.jsp
      */
     @RequestMapping("/toEdit")
-    public String toEdit(Integer id, Model model) {
+    public String toEdit(String id, Model model) {
         //根据用户id查询到用户 并存入到model供前端回显
         UserView userById = userService.findUserById(id);
         model.addAttribute("findUser", userById);
@@ -188,8 +192,9 @@ public class UserController {
 
     /**
      * 根据id修改用户信息
-     * @param userView  前端传递的修改的用户信息
-     * @return  是否修改成功 ok/no
+     *
+     * @param userView 前端传递的修改的用户信息
+     * @return 是否修改成功 ok/no
      */
     @RequestMapping("/updateUser")
     @ResponseBody
@@ -202,6 +207,26 @@ public class UserController {
             return "no";
         }
 
+    }
+
+
+
+    /**
+     * 根据id批量删除用户
+     *
+     * @param ids 要删除的用户id数组
+     * @return 是否删除成功 ok/no
+     */
+    @RequestMapping("/deluserss")
+    @ResponseBody
+    public String deluserss(String[] ids) {
+        try {
+            userService.deluserss(ids);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "no";
+        }
     }
 
 

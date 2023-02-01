@@ -76,7 +76,7 @@ public class UserServicImpl implements UserService {
      * @return 查找到的用户信息
      */
     @Override
-    public UserView findUserById(Integer id) {
+    public UserView findUserById(String id) {
         return userMapper.findUserById(id);
     }
 
@@ -96,7 +96,17 @@ public class UserServicImpl implements UserService {
      * @return 用户的数量
      */
     @Override
-    public Integer UserCount() {
-        return userMapper.UserCount();
+    public Integer UserCount(String likeName) {
+        return userMapper.UserCount(likeName);
+    }
+
+    /**
+     * 根据id批量删除用户
+     *
+     * @param ids 要删除的用户id数组
+     */
+    @Override
+    public void deluserss(String[] ids) {
+        userMapper.deluserss(ids);
     }
 }

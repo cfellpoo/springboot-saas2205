@@ -44,7 +44,7 @@ public interface UserService {
     * @param id 要查找的用户信息
     * @return 查找到的用户信息
     */
-   UserView findUserById(Integer id);
+   UserView findUserById(String id);
 
    /**
     * 根据id修改用户信息
@@ -56,5 +56,12 @@ public interface UserService {
     * 用户的数量
     * @return 用户的数量
     */
-   Integer UserCount();
+   Integer UserCount(String likeName);
+
+   /**
+    * 根据id批量删除用户
+    * @param ids 要删除的用户id数组
+    */
+   void deluserss(String[] ids);
+
 }

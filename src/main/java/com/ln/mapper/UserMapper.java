@@ -1,6 +1,7 @@
 package com.ln.mapper;
 
 import com.ln.pojo.UserView;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public interface UserMapper {
      * @param id 要查找的用户信息
      * @return 查找到的用户信息
      */
-    UserView findUserById(Integer id);
+    UserView findUserById(String id);
 
     /**
      * 根据id修改用户信息
@@ -55,5 +56,14 @@ public interface UserMapper {
      * 用户的数量
      * @return 用户的数量
      */
-    Integer UserCount();
+    Integer UserCount(String likeName);
+
+
+
+    /**
+     * 根据id批量删除用户
+     * @param ids 要删除的用户id数组
+     */
+    void deluserss(@Param("ids") String[] ids);
+
 }
