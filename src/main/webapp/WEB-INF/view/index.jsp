@@ -78,10 +78,10 @@
                                                                                              style="float:right">3</span></span>
                         <ul style="margin-top:10px;">
                             <li style="height:30px;">
-                                <a href="/userController/toindex" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
+                                <a href="/userController/toindex_page" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
                             </li>
                             <li style="height:30px;">
-                                <a href="rc/findInfopage"><i用户维护 class="glyphicon glyphicon-king"></i用户维护> 角色维护</a>
+                                <a href="/rc/toindex_page"><i用户维护 class="glyphicon glyphicon-king"></i用户维护> 角色维护</a>
                             </li>
                             <li style="height:30px;">
                                 <a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 许可维护</a>
@@ -260,7 +260,7 @@
 
     function nameTexts() {
         var username = $("#nameText").val();
-        window.location.href = "/uc/findInfopage?username=" + username;
+        window.location.href = "/userController/toindex_page?likeName_respon=" + username;
     }
 
     //删除

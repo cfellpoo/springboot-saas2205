@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
@@ -9,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/font-awesome.min.css">
 	<link rel="stylesheet" href="../css/main.css">
 	<style>
@@ -17,12 +18,8 @@
         list-style-type: none;
 		cursor:pointer;
 	}
-	.tree-closed {
-	    height : 40px;
-	}
-	.tree-expanded {
-	    height : auto;
-	}
+	table tbody tr:nth-child(odd){background:#F4F4F4;}
+	table tbody td:nth-child(even){color:#C00;}
 	</style>
   </head>
 
@@ -55,11 +52,12 @@
 			</li>
           </ul>
           <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="查询">
+            <input type="text" class="form-control" placeholder="Search...">
           </form>
         </div>
       </div>
     </nav>
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -68,14 +66,14 @@
 					<li class="list-group-item tree-closed" >
 						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a> 
 					</li>
-					<li class="list-group-item tree-closed">
+					<li class="list-group-item">
 						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span> 
-						<ul style="margin-top:10px;display:none;">
+						<ul style="margin-top:10px;">
 							<li style="height:30px;">
 								<a href="/userController/toindex_page"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
 							</li>
 							<li style="height:30px;">
-								<a href="/rc/toindex_page"><i class="glyphicon glyphicon-king"></i> 角色维护</a>
+								<a href="/rc/toindex_page" style="color:red;"><i class="glyphicon glyphicon-king"></i> 角色维护</a>
 							</li>
 							<li style="height:30px;">
 								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 许可维护</a> 
@@ -129,42 +127,74 @@
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">控制面板</h1>
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+				<h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 数据列表</h3>
+			  </div>
+			  <div class="panel-body">
+<form class="form-inline" role="form" style="float:left;">
+  <div class="form-group has-feedback">
+    <div class="input-group">
+      <div class="input-group-addon">查询条件</div>
+      <input class="form-control has-success" type="text" value="${likeName_respon}" id="textName" placeholder="请输入查询条件">
+    </div>
+  </div>
+  <button type="button"   onclick="nameTexts()" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
+</form>
+<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
+<button type="button" onclick="add()"class="btn btn-primary" style="float:right;" onclick="window.location.href='form.html'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+<br>
+ <hr style="clear:both;">
+          <div class="table-responsive">
+            <table class="table  table-bordered">
+              <thead>
+                <tr >
+                  <th width="30">#</th>
+				  <th width="30"><input type="checkbox"></th>
+                  <th>名称</th>
+                  <th width="100">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+              <c:forEach items="${list}" var="role" varStatus="status">
+                <tr>
+                  <td>${status.count }</td>
+				  <td><input type="checkbox"></td>
+                  <td>${role.name}</td>
+                  <td>
+				      <button type="button" onclick="toupdateper(${role.id})" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
+				      <button type="button" onclick="toupdateRole(${role.id})" class="btn btn-primary btn-xs" ><i class=" glyphicon glyphicon-pencil"></i></button>
+					  <button type="button" class="btn btn-danger btn-xs"  onclick="deleteRole('${role.id}')"><i class=" glyphicon glyphicon-remove"></i></button>
+				  </td>
+                </tr>
+              </c:forEach>
+              </tbody>
+			 <tfoot>
+			     <tr >
+				     <td colspan="6" align="center">
+						<ul class="pagination">
+						<li><a href="#" onclick="changepageno(${pageno-1},${totalno})">上一页</a></li>
+						<li><a href="#" onclick="changepageno(${pageno+1},${totalno})">下一页</a></li>
+							 </ul>
+					 </td>
+				 </tr>
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
+			  </tfoot>
+            </table>
           </div>
+			  </div>
+			</div>
         </div>
       </div>
     </div>
+
     <script src="../jquery/jquery-2.1.1.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 	<script src="../script/docs.min.js"></script>
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){
-                    // jquery对象的回调方法中的this关键字为DOM对象
-                    // $(DOM) ==> JQuery
-				    if ( $(this).find("ul") ) { // 3 li
+				    if ( $(this).find("ul") ) {
 						$(this).toggleClass("tree-closed");
 						if ( $(this).hasClass("tree-closed") ) {
 							$("ul", this).hide("fast");
@@ -174,6 +204,44 @@
 					}
 				});
             });
+            
+            function changepageno(pageno,totalno){
+				var name=$("#textName").val();
+            	window.location.href="/rc/toindex_page?startPage="+pageno+"&likeName_respon="+name;
+            }
+			function nameTexts(){
+				var name=$("#textName").val();
+				window.location.href="/rc/toindex_page?likeName_respon="+name;
+			}
+            
+           
+            function clickPage(page){
+            	window.location.href = "/rc/getRole?page="+page;
+            }
+            function toupdateRole(id){
+            	window.location.href = "/rc/findRoleById?id="+id;	
+            }
+            function add(){
+            	window.location.href ="/rc/goadd"
+            }
+            function deleteRole(id){
+            	$.post('/rc/deleteRole',
+            			{
+            			id:id
+            			},function(data){
+            				if(data=='ok'){
+            					alert("删除成功");
+            					location.reload();
+            				}else{
+
+            					alert("删除失败");
+            					location.reload();
+            				}
+            			})
+            }
+            function toupdateper(id){
+            	window.location.href = "/rc/toroleper?id="+id;	
+            }
         </script>
   </body>
 </html>

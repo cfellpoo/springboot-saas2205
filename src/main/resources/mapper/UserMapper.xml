@@ -17,16 +17,15 @@
         SELECT *
         from t_user
     </select>
-    <!--查询全部-->
 
 
     <!--查询全部_分页-->
     <select id="findAll_page" resultType="UserView">
         SELECT *
-        from t_user limit #{startPage},#{Pagesize}
+        from t_user
+        where username like #{likeName} limit #{startPage}
+            , #{Pagesize}
     </select>
-    <!--查询全部_分页-->
-
 
 
     <!--根据id删除用户-->
@@ -35,9 +34,6 @@
         from t_user
         where id = #{id}
     </delete>
-    <!--根据id删除用户-->
-
-
 
 
     <!--新增用户-->
@@ -45,7 +41,6 @@
         insert into t_user
         values (#{id}, #{username}, #{loginacct}, #{userpswd}, #{email}, #{createtime})
     </insert>
-    <!--新增用户-->
 
 
     <!--根据id查询用户-->
@@ -54,7 +49,6 @@
         from t_user
         where id = #{id}
     </select>
-    <!--根据id查询用户-->
 
 
     <!--根据id修改用户-->
@@ -65,7 +59,6 @@
             email     = #{email}
         where id = #{id};
     </update>
-    <!--根据id修改用户-->
 
 
     <!--用户总条数-->
@@ -73,6 +66,12 @@
         select count(*) as countUser
         from t_user
     </select>
-    <!--用户总条数-->
 
+    <!-- 批量删 -->
+    <delete id="deluserss">
+        delete from t_user where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

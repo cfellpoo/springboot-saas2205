@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ln.mapper.RoleMapper">
+
+    <!--查询全部角色-->
+    <select id="findAllRole" resultType="RoleView">
+        select *
+        from t_role
+    </select>
+
+    <!--查询全部校色_分页-->
+    <select id="findAllRole_page" resultType="RoleView">
+        SELECT *
+        from t_role
+        where name like #{likeName} limit #{startPage}
+            , #{Pagesize}
+    </select>
+
+    <!--角色总条数-->
+    <select id="roleCount" resultType="int">
+        select count(*) as countUser
+        from t_role where name like #{likeName}
+    </select>
+
+
+</mapper>
