@@ -155,7 +155,7 @@ public class UserController {
     @ResponseBody
     public String addUser(UserView userView) {
         try {
-            //手动设置用户随机UUID
+            //手动设置用户随机UUIDd
             userView.setId(UUID.randomUUID().toString());
             //手动设置用户密码为123
             userView.setUserpswd("123");
