@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -136,7 +137,10 @@ public class UserController {
     @ResponseBody
     public String delUserById(int id) {
         try {
-            //
+            //aa //aa
+            //aa
+
+            //aa
             userService.delUserById(id);
             return "ok";
         } catch (Exception e) {
@@ -156,6 +160,7 @@ public class UserController {
     @ResponseBody
     public String addUser(UserView userView) {
         try {
+            System.out.println('t');
             //手动设置用户随机UUIDd
             userView.setId(UUID.randomUUID().toString());
             //手动设置用户密码为123
