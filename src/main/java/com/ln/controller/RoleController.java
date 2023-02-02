@@ -2,17 +2,14 @@ package com.ln.controller;
 
 import com.ln.pojo.UserView;
 import com.ln.service.RoleService;
-import com.ln.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/rc")
@@ -50,25 +47,33 @@ public class RoleController {
                                        Integer startPage,
                                @RequestParam(defaultValue = "10", required = false)
                                        Integer pageSize,
-                               @RequestParam(defaultValue = "",required = false) String likeName_respon) {
+                               @RequestParam(defaultValue = "", required = false) String likeName_respon) {
 
-        if (startPage == 0 ) {
+        if (startPage == 0) {
             startPage = 1;
         }
 
+        double totalno = Math.ceil(1.0 * roleService.roleCount("%" + likeName_respon + "%") / pageSize);
+        if (startPage > totalno) {
+            Double aDouble = new Double(totalno);
+
+            startPage = aDouble.intValue();
+        }
         //起始页= 开始页-1*每页的条数
         Integer startPage_req = (startPage - 1) * pageSize;
 
         HashMap<Object, Object> map = new HashMap<>();
         map.put("startPage", startPage_req);
         map.put("Pagesize", pageSize);
-        map.put("likeName", "%"+likeName_respon+"%");
+        map.put("likeName", "%" + likeName_respon + "%");
 
 
-        //总页数 = 总条数%pageSize并向上取整
-        double totalno2 = roleService.roleCount("%"+likeName_respon+"%") % pageSize / 10.0;
-        double totalno = Math.ceil(roleService.roleCount("%"+likeName_respon+"%") / pageSize + totalno2);
+        //总页数 = 总条数/pageSize并向上取整
+//        double totalno2 = roleService.roleCount("%"+likeName_respon+"%") % pageSize / 10.0;
+//        double totalno = Math.ceil(roleService.roleCount("%"+likeName_respon+"%") / pageSize + totalno2);
+
         List<UserView> all = roleService.findAllRole_page(map);
+
 
         model.addAttribute("list", all);
         model.addAttribute("totalno", totalno);
