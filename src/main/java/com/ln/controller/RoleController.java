@@ -49,11 +49,15 @@ public class RoleController {
                                        Integer pageSize,
                                @RequestParam(defaultValue = "", required = false) String likeName_respon) {
 
+        //如果页面为0 页面为1
         if (startPage == 0) {
             startPage = 1;
         }
 
+        //总页数 = 总条数/pageSize并向上取整
         double totalno = Math.ceil(1.0 * roleService.roleCount("%" + likeName_respon + "%") / pageSize);
+
+        //如果页面大于总页数 页面=最大页数
         if (startPage > totalno) {
             Double aDouble = new Double(totalno);
 
@@ -68,7 +72,7 @@ public class RoleController {
         map.put("likeName", "%" + likeName_respon + "%");
 
 
-        //总页数 = 总条数/pageSize并向上取整
+
 //        double totalno2 = roleService.roleCount("%"+likeName_respon+"%") % pageSize / 10.0;
 //        double totalno = Math.ceil(roleService.roleCount("%"+likeName_respon+"%") / pageSize + totalno2);
 
@@ -84,4 +88,9 @@ public class RoleController {
     }
 
 
+
+    @RequestMapping("/goadd")
+    public String goadd(){
+        return "role/add";
+    }
 }
