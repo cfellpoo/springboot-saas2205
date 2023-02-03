@@ -19,6 +19,7 @@ public class RoleController {
     private RoleService roleService;
 
 
+
     /**
      * 跳转角色index页面_不分页
      *
@@ -78,7 +79,14 @@ public class RoleController {
 
         List<UserView> all = roleService.findAllRole_page(map);
 
+        map.put("likeName", "%"+likeName_respon+"%");
 
+
+        //总页数 = 总条数%pageSize并向上取整
+        double totalno2 = roleService.roleCount("%"+likeName_respon+"%") % pageSize / 10.0;
+//        double totalno = Math.ceil(roleService.roleCount("%"+likeName_respon+"%") / pageSize + totalno2);
+        List<UserView> all1 = roleService.findAllRole_page(map);
+        System.out.println(totalno);
         model.addAttribute("list", all);
         model.addAttribute("totalno", totalno);
         model.addAttribute("pageSize", pageSize);
@@ -87,10 +95,14 @@ public class RoleController {
         return "/role/index";
     }
 
-
-
-    @RequestMapping("/goadd")
-    public String goadd(){
-        return "role/add";
-    }
+//    @RequestMapping("/goadd")
+//    public String goadd(){
+//        return "role/add";
+//    }
+        @RequestMapping("/goadd")
+        public String goadd(){
+             return "role/add";
+        }
 }
+
+

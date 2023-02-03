@@ -13,6 +13,22 @@ public interface RoleMapper {
      */
     List<UserView> findAllRole();
 
+
+    /**
+     * 根据id查询角色
+     *
+     * @return 根据id查询角色
+     */
+    List<UserView> findRoleById(String id);
+
+    /**
+     * 根据id查询角色_反
+     *
+     * @return 根据id查询角色
+     */
+    List<UserView> findRoleById_un (String id);
+
+
     /**
      * 查询全部角色数据_分页
      * @param map 分页的参数

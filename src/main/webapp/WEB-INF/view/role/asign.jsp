@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <meta charset="GB18030">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<link rel="stylesheet" href="../../../bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../../../css/font-awesome.min.css">
-	<link rel="stylesheet" href="../../../css/main.css">
-	<link rel="stylesheet" href="../../../css/doc.min.css">
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<link rel="stylesheet" href="../css/main.css">
+	<link rel="stylesheet" href="../css/doc.min.css">
 	<style>
 	.tree li {
         list-style-type: none;
@@ -68,17 +69,13 @@
 						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span> 
 						<ul style="margin-top:10px;">
 							<li style="height:30px;">
-								<a href="user.html" ><i class="glyphicon glyphicon-user"></i> 用户维护</a> 
+								<a href="user.html" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="role.html" style="color:red;"><i class="glyphicon glyphicon-certificate"></i> 角色维护</a> 
+								<a href="role.html"><i class="glyphicon glyphicon-certificate"></i> 角色维护</a> 
 							</li>
 							<li style="height:30px;">
-<<<<<<< HEAD
-								<a href="/pc/go_permission"><i class="glyphicon glyphicon-lock"></i> 许可维护</a>
-=======
 								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 许可维护</a> 
->>>>>>> 354b81da557da891969a87ee2b6ff1c84db93256
 							</li>
 						</ul>
 					</li>
@@ -132,18 +129,36 @@
 				<ol class="breadcrumb">
 				  <li><a href="#">首页</a></li>
 				  <li><a href="#">数据列表</a></li>
-				  <li class="active">修改</li>
+				  <li class="active">分配角色</li>
 				</ol>
 			<div class="panel panel-default">
-              <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form">
+			 
+				<form id="myform" role="form" class="form-inline">
+				 <input type="hidden" name="userid" value="${id }">
 				  <div class="form-group">
-					<label for="exampleInputPassword1">角色名称</label>
-					<input type="text" value="${findRoleById.name }" class="form-control" id="name">
+					<label for="exampleInputPassword1">未分配角色列表</label><br>
+					<select id="roleun" name="roleun" class="form-control" multiple size="10" style="width:200px;overflow-y:auto;">
+                        <c:forEach items="${list }" var="list" >
+                         <option value="${list.id }">${list.name }</option>
+                        </c:forEach>
+                    </select>
 				  </div>
-				  <button type="button" class="btn btn-success" onclick="up(${findRoleById.id })"><i class="glyphicon glyphicon-edit"></i> 修改</button>
-				  <button type="button" class="btn btn-danger" onclick="upmyform()"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+				  <div class="form-group">
+                        <ul>
+                            <li id="rightasignrelr" class="btn btn-default glyphicon glyphicon-chevron-right"></li>
+                            <br>
+                            <li id="leftasignrelr"  class="btn btn-default glyphicon glyphicon-chevron-left" style="margin-top:20px;"></li>
+                        </ul>
+				  </div>
+				  <div class="form-group" style="margin-left:40px;">
+					<label for="exampleInputPassword1">已分配角色列表</label><br>
+					<select id="doroel" name="doroel" class="form-control" multiple size="10" style="width:200px;overflow-y:auto;">
+                      <c:forEach items="${unlist }" var="list" >
+                         <option value="${list.id }">${list.name }</option>
+                        </c:forEach>
+                    </select>
+				  </div>
 				</form>
 			  </div>
 			</div>
@@ -176,9 +191,10 @@
 		</div>
 	  </div>
 	</div>
-    <script src="../../../jquery/jquery-2.1.1.min.js"></script>
-    <script src="../../../bootstrap/js/bootstrap.min.js"></script>
-	<script src="script/docs.min.js"></script>
+	<script src="../jquery/common.js"></script>
+    <script src="../jquery/jquery-2.1.1.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+	<script src="../script/docs.min.js"></script>
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){
@@ -191,23 +207,56 @@
 						}
 					}
 				});
+			 
+			    $("#rightasignrelr").click(function(){
+			    	var sel=$("#roleun option:selected");
+			    	 if(sel.length==0){
+			    		alert("请选择要分配的角色");
+			    	}else{
+			    		$("#doroel").append(sel);
+			    		$.ajax({
+		             		type:"post",
+		             		url:"/userController/addUeserRole",
+		             		data:$("#myform").serialize(),
+		             		dataType:'text',
+		             		success:function(result){
+		             			if(result=='ok'){
+		             				alert("分配角色成功")
+		             				$("#doroel").append(sel);
+		             				 
+		             			}else{
+		             				alert("分配角色失败")
+		             			}
+		             		}
+		             	});
+			    		
+			    	} 
+			    }) 
+			    $("#leftasignrelr").click(function(){
+			    	var sel=$("#doroel option:selected");
+			    	if(sel.length==0){
+			    		alert("请选择要取消的角色");
+			    	}else{
+			    		$("#roleun").append(sel);
+			    		$.ajax({
+		             		type:"post",
+		             		url:"/userController/delUserRole",
+		             		data:$("#myform").serialize(),
+		             		dataType:'text',
+		             		success:function(result){
+		             			if(result=='ok'){
+		             				alert("取消角色成功")
+		             				$("#roleun").append(sel);
+		             				// window.location.href="/uc/loginUser"; 
+		             			}else{
+		             				alert("取消角色失败")
+		             			}
+		             		}
+		             	});
+			    		
+			    	}
+			    })
             });
-            function up(id){
-            	var name = $("#name").val()
-            	
-            	
-            	$.post("/rc/upRole",{id:id,name:name},function(data){
-            		if(data=="ok"){
-            			location.href="/rc/getRole"
-            		}else{
-            			alert("修改失败")
-            		}
-            	})
-            }
-       function    upmyform(){
-    	   location.reload(true);	
-       }
-       
         </script>
   </body>
 </html>

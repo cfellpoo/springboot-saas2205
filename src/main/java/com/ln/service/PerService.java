@@ -1,7 +1,9 @@
 package com.ln.service;
 
-import com.ln.pojo.Permission;
+import com.ln.pojo.PermissionView;
+
+import java.util.List;
 
 public interface PerService {
-	Permission findPer();
+	List<PermissionView> findPer();
 }

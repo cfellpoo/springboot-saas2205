@@ -338,7 +338,7 @@
     }
 
     function asignUser(id) {
-        window.location.href = "/uc/asignUser?id=" + id;
+        window.location.href = "/userController/asignUser?id=" + id;
     }
 
     function up1(id) {

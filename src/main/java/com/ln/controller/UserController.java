@@ -1,6 +1,7 @@
 package com.ln.controller;
 
 import com.ln.pojo.UserView;
+import com.ln.service.RoleService;
 import com.ln.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,10 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/userController")
 public class UserController {
+
+    @Autowired
+    private RoleService roleService;
+
 
     @Autowired
     private UserService userService;
@@ -105,6 +110,7 @@ public class UserController {
         HashMap<Object, Object> map = new HashMap<>();
         map.put("startPage", startPage_req);
         map.put("Pagesize", pageSize);
+        map.put("likeName", "%" + likeName_respon + "%");
         map.put("likeName", "%" + likeName_respon + "%");
 
 
@@ -222,6 +228,63 @@ public class UserController {
     public String deluserss(String[] ids) {
         try {
             userService.deluserss(ids);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "no";
+        }
+    }
+
+    /**
+     *
+     * @param model list：用户已分配角色、unlist：用户未分配角色
+     * @param id 用户id
+     * @return  asign页面
+     */
+    @RequestMapping("/asignUser")
+    public String asignUser(Model model, String id) {
+        //已分配
+        model.addAttribute("list", roleService.findRoleById_un(id));
+
+        //未分配
+        model.addAttribute("unlist", roleService.findRoleById(id));
+
+        model.addAttribute("id", id);
+        return "role/asign";
+    }
+
+
+    /**
+     * 修改用户角色
+     *
+     * @return ok/no
+     */
+    @RequestMapping("/addUeserRole")
+    @ResponseBody
+    public String addUeserRole(String userid, String[] doroel) {
+//        System.out.println(userid );
+//        System.out.println(doroel);
+
+        try {
+            userService.addUserRole(userid, doroel);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "no";
+        }
+
+    }
+
+    /**
+     * 删除用户角色
+     *
+     * @return ok/no
+     */
+    @RequestMapping("/delUserRole")
+    @ResponseBody
+    public String delUserRole(String userid, String[] roleun) {
+        try {
+            userService.delUserRole(userid, roleun);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();

@@ -74,7 +74,11 @@
 								<a href="role.html"><i class="glyphicon glyphicon-certificate"></i> 角色维护</a> 
 							</li>
 							<li style="height:30px;">
+<<<<<<< HEAD
 								<a href="/pc/go_permission"><i class="glyphicon glyphicon-lock"></i> 许可维护</a>
+=======
+								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 许可维护</a> 
+>>>>>>> 354b81da557da891969a87ee2b6ff1c84db93256
 							</li>
 						</ul>
 					</li>

@@ -3,7 +3,7 @@
 			PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="com.ln.mapper.PerMapper">
-			<select id="findPer" resultType="com.ln.pojo.Permission">
-				select * from t_permisssion where pid=0
+			<select id="findPer" resultType="PermissionView">
+				select * from t_permisssion
 			</select>
 	</mapper>

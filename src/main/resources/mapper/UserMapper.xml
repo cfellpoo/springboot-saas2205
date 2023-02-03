@@ -64,7 +64,8 @@
     <!--用户总条数-->
     <select id="UserCount" resultType="int">
         select count(*) as countUser
-        from t_user where username like #{likeName}
+        from t_user
+        where username like #{likeName}
     </select>
 
     <!-- 批量删 -->
@@ -74,4 +75,22 @@
             #{id}
         </foreach>
     </delete>
+
+    <!--新增用户角色-->
+    <insert id="addUserRole">
+        insert into t_user_role (userid, roleid) values
+        <foreach collection="roleList" separator="," item="roleid">
+            (#{userid},#{roleid})
+        </foreach>
+
+    </insert>
+
+    <delete id="delUserRole">
+        delete
+        from t_user_role
+        where userid = #{userid} and roleid in (0,<foreach collection="delRoleList" separator="," item="delRoleId">
+        ${delRoleId}
+    </foreach>)
+    </delete>
+
 </mapper>

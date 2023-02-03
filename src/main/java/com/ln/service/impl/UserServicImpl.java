@@ -109,4 +109,26 @@ public class UserServicImpl implements UserService {
     public void deluserss(String[] ids) {
         userMapper.deluserss(ids);
     }
+
+    /**
+     * 添加用户角色
+     *
+     * @param userid   用户id
+     * @param roleList 角色id数组
+     */
+    @Override
+    public void addUserRole(String userid, String[] roleList) {
+        userMapper.addUserRole(userid, roleList);
+    }
+
+    /**
+     * 删除用户角色
+     *
+     * @param userid   用户id
+     * @param roleList 删除角色id数组
+     */
+    @Override
+    public void delUserRole(String userid, String[] roleList) {
+        userMapper.delUserRole(userid, roleList);
+    }
 }

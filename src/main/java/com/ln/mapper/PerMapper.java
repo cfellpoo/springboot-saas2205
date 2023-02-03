@@ -1,7 +1,9 @@
 package com.ln.mapper;
 
-import com.ln.pojo.Permission;
+import com.ln.pojo.PermissionView;
+
+import java.util.List;
 
 public interface PerMapper {
-	Permission findPer();
+	List<PermissionView>  findPer();
 }

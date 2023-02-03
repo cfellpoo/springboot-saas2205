@@ -66,4 +66,21 @@ public interface UserMapper {
      */
     void deluserss(@Param("ids") String[] ids);
 
+
+    /**
+     * 添加用户角色
+     * @param userid 用户id
+     * @param roleList  角色id数组
+     */
+    void addUserRole(@Param("userid")String userid,@Param("roleList") String[] roleList);
+
+    /**
+     * 删除用户角色
+     * @param userid 用户id
+     * @param roleList  删除角色id数组
+     */
+    void delUserRole(@Param("userid")String userid,@Param("delRoleList") String[] roleList);
+
+
+
 }

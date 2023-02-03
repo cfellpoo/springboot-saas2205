@@ -26,6 +26,29 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
+     * 根据id查询角色
+     *
+     * @param id 用户id
+     * @return 根据id查询角色
+     */
+    @Override
+    public List<UserView> findRoleById(String id) {
+        return roleMapper.findRoleById(id);
+    }
+
+    /**
+     * 根据id查询角色_反
+     *
+     * @param id 用户id
+     * @return 根据id查询角色
+     */
+    @Override
+    public List<UserView> findRoleById_un(String id) {
+        return roleMapper.findRoleById_un(id);
+    }
+
+
+    /**
      * 查询全部角色数据_分页
      *
      * @param map 分页的参数

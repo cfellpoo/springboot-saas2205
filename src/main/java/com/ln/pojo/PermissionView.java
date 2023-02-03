@@ -3,7 +3,7 @@ package com.ln.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Permission {
+public class PermissionView {
 private String id;
 private String name;
 private String pid;
@@ -11,7 +11,7 @@ private String url;
 private String icon;
 private boolean open=true;
 private boolean checked=false;
-List<Permission> children=new ArrayList<>();
+List<PermissionView> children=new ArrayList<>();
 
 public boolean isChecked() {
 	return checked;
@@ -31,10 +31,10 @@ public boolean isChecked() {
 				'}';
 	}
 
-	public Permission() {
+	public PermissionView() {
 	}
 
-	public Permission(String id, String name, String pid, String url, String icon, boolean open, boolean checked, List<Permission> children) {
+	public PermissionView(String id, String name, String pid, String url, String icon, boolean open, boolean checked, List<PermissionView> children) {
 		this.id = id;
 		this.name = name;
 		this.pid = pid;
@@ -78,10 +78,10 @@ public boolean isOpen() {
 public void setOpen(boolean open) {
 	this.open = open;
 }
-public List<Permission> getChildren() {
+public List<PermissionView> getChildren() {
 	return children;
 }
-public void setChildren(List<Permission> children) {
+public void setChildren(List<PermissionView> children) {
 	this.children = children;
 }
 public String getIcon() {

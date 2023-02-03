@@ -1,6 +1,7 @@
 package com.ln.service;
 
 import com.ln.pojo.UserView;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,5 +64,21 @@ public interface UserService {
     * @param ids 要删除的用户id数组
     */
    void deluserss(String[] ids);
+
+   /**
+    * 添加用户角色
+    * @param userid 用户id
+    * @param roleList  角色id数组
+    */
+   void addUserRole(String userid, String[] roleList);
+
+
+   /**
+    * 删除用户角色
+    * @param userid 用户id
+    * @param roleList  删除角色id数组
+    */
+   void delUserRole(@Param("userid")String userid,@Param("delRoleList") String[] roleList);
+
 
 }
